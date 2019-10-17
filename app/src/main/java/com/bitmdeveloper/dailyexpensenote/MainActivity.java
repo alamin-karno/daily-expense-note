@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private Spinner expense_typeSP;
+    private Button expense_docBTN;
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Electricity Bill","Internet Bill","Phone Bill"};
     private String expensetype;
@@ -25,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
         init();
 
         setspinner();
+
+        expense_docBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheet_Camera_Gallery bottomSheet_camera_gallery = new BottomSheet_Camera_Gallery();
+                bottomSheet_camera_gallery.show(getSupportFragmentManager(),"camera");
+            }
+        });
     }
 
     private void setspinner() {
@@ -56,5 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         expense_typeSP = findViewById(R.id.expense_typeSP);
+        expense_docBTN = findViewById(R.id.expense_docBTN);
     }
 }
