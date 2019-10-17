@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Add Expense"
+                android:gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+        </androidx.appcompat.widget.Toolbar>
+
+        <Spinner
+            android:id="@+id/expense_typeSP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:id="@+id/expense_amountET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter expense amount"
+            android:layout_margin="10dp"
+            android:inputType="number"/>
+
+        <EditText
+            android:id="@+id/expense_dateET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter expense date"
+            android:drawableRight="@drawable/date"
+            android:layout_margin="10dp"/>
+
+        <EditText
+            android:id="@+id/expense_timeET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter expense date"
+            android:drawableRight="@drawable/time"
+            android:layout_margin="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+            <ImageView
+                android:id="@+id/expense_imageIV"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight=".3"
+                android:src="@drawable/file"/>
+            <Button
+                android:id="@+id/expense_docBTN"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Add document (if any)"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_expenseBTN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add expense"
+            android:textAllCaps="false"
+            android:layout_margin="10dp"/>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
