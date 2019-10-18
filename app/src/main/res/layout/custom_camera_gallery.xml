@@ -51,4 +51,11 @@
                 android:padding="5dp"/>
         </LinearLayout>
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/imagedoneBTN"
+        android:textColor="#FFFFFF"
+        android:background="@color/colorAccent"/>
 </LinearLayout>

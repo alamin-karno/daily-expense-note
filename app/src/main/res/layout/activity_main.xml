@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
 
     <LinearLayout
@@ -41,19 +41,22 @@
             android:layout_margin="10dp"
             android:inputType="number"/>
 
-        <EditText
+        <Button
             android:id="@+id/expense_dateET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter expense date"
+            android:textAllCaps="false"
             android:drawableRight="@drawable/date"
+            android:textColorHint="#000"
             android:layout_margin="10dp"/>
 
-        <EditText
+        <Button
             android:id="@+id/expense_timeET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter expense date"
+            android:hint="Enter expense time (optional)"
+            android:textAllCaps="false"
             android:drawableRight="@drawable/time"
             android:layout_margin="10dp"/>
 
@@ -67,13 +70,13 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight=".3"
-                android:src="@drawable/file"/>
+                android:background="@drawable/file"/>
             <Button
                 android:id="@+id/expense_docBTN"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".7"
-                android:text="Add document (if any)"
+                android:hint="Add document (if any)"
                 android:textAllCaps="false"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"/>
