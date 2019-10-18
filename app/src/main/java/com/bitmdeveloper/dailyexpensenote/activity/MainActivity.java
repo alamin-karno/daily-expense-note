@@ -41,8 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText expense_amountET;
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Electricity Bill","Internet Bill","Phone Bill"};
-    private String expensetype,expenseimage,amount;
-    private Integer expenseimageINT;
+    private String expensetype,amount,date,time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String amount = expense_amountET.getText().toString();
-                String date = expense_dateBTN.getText().toString();
-                String time = expense_timeBTN.getText().toString();
+                amount = expense_amountET.getText().toString();
+                date = expense_dateBTN.getText().toString();
+                time = expense_timeBTN.getText().toString();
 
                 if(expensetype.equals("Select expense type")){
                     Toast.makeText(MainActivity.this, "Please select an expense type.", Toast.LENGTH_SHORT).show();
