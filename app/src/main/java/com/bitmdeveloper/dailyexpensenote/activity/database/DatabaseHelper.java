@@ -39,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COL_TYPE,type);
         values.put(COL_AMOUNT,amount);
-        values.put(COL_DATE,date);/////
+        values.put(COL_DATE,date);
         values.put(COL_TIME,time);
         values.put(COL_DOC,doc);
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
