@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +25,8 @@ public class ExpenseActivity extends AppCompatActivity {
 
    private BottomNavigationView bottomNavigationView;
    private FloatingActionButton favicon;
-    private Spinner expense_typeSP;
+   private Spinner expense_typeSP;
+   private float x1,x2,y1,y2;
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Electricity Bill","Internet Bill","Phone Bill"};
     private String expensetype;
@@ -54,14 +56,7 @@ public class ExpenseActivity extends AppCompatActivity {
         expense_typeSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //if(adapterView.getItemAtPosition(i).equals("Select expense type")){
-                //     Toast.makeText(MainActivity.this, "Select the type of expense.", Toast.LENGTH_SHORT).show();
-                // }
-                // else{
                 expensetype = adapterView.getSelectedItem().toString();
-
-                //Toast.makeText(MainActivity.this, expensetype+" selected.", Toast.LENGTH_SHORT).show();
-                //  }
             }
 
             @Override
@@ -110,4 +105,5 @@ public class ExpenseActivity extends AppCompatActivity {
         favicon = findViewById(R.id.favicon);
         expense_typeSP = findViewById(R.id.expense_typeSP);
     }
+
 }
