@@ -34,7 +34,6 @@ public class ExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
-
         init();
 
         replaceFragment(new DashboardFragment());
@@ -82,7 +81,9 @@ public class ExpenseActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_expense:
-                        replaceFragment(new ExpenseFragment());
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout,new ExpenseFragment()).addToBackStack(null).commit();
+                        //replaceFragment(new ExpenseFragment());
                         return true;
                     case R.id.nav_dashboard:
                         replaceFragment(new DashboardFragment());
@@ -96,7 +97,12 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        //if(fragment == new ExpenseFragment()){
+            fragmentTransaction.replace(R.id.frame_layout,fragment);
+       // }
+       // else {
+            fragmentTransaction.replace(R.id.frame_layout,fragment);
+       // }
         fragmentTransaction.commit();
     }
 
@@ -105,5 +111,4 @@ public class ExpenseActivity extends AppCompatActivity {
         favicon = findViewById(R.id.favicon);
         expense_typeSP = findViewById(R.id.expense_typeSP);
     }
-
 }

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitmdeveloper.dailyexpensenote.R;
 import com.bitmdeveloper.dailyexpensenote.activity.activity.MainActivity;
+import com.bitmdeveloper.dailyexpensenote.activity.database.DatabaseHelper;
 import com.bitmdeveloper.dailyexpensenote.activity.model_class.Expense;
 import com.google.android.material.navigation.NavigationView;
 
@@ -42,7 +43,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final ExpenseAdapter.ViewHolder holder, int position) {
-        Expense expense = expenses.get(position);
+        final Expense expense = expenses.get(position);
         holder.expense_typeTV.setText(expense.getExpense_type());
         holder.expense_dateTV.setText(expense.getExpense_date());
         holder.expense_amountTV.setText(expense.getExpense_amount());
@@ -58,9 +59,11 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
                         switch (menuItem.getItemId()){
                             case R.id.nav_update:
                                 Toast.makeText(context, "Update", Toast.LENGTH_SHORT).show();
-                                return true;
+
                             case R.id.nav_delete:
-                                Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
+                             //   DatabaseHelper db = new DatabaseHelper(context);
+                              //  Integer dbc = Integer.parseInt(db.COL_ID);
+                              //  Integer delete = db.deleteData(dbc);
                                 return true;
                         }
                         return false;

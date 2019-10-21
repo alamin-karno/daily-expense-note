@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -177,67 +178,51 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-                final View view1 = getLayoutInflater().inflate(R.layout.custom_camera_gallery,null);
-                builder.setView(view1);
-                LinearLayout cameraBTN = view1.findViewById(R.id.cameraBTN);
-                LinearLayout galleryBTN = view1.findViewById(R.id.galleryBTN);
-                Button imagedone = view1.findViewById(R.id.imagedoneBTN);
-
-
-                final Dialog dialog = builder.create();
+                String[] items = {"Camera","Gallery"};
+                builder.setTitle("Choose an action");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case 0:
+                                openCamera();
+                                break;
+                            case 1:
+                                opengallery();
+                                break;
+                        }
+                    }
+                });
+                Dialog dialog = builder.create();
                 dialog.show();
-                cameraBTN.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        openCamera(view);
-                    }
-                });
-                galleryBTN.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        opengallery(view1);
-                    }
-                });
-
-                imagedone.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(expense_imageIV.equals("")){
-                            Toast.makeText(MainActivity.this, "Please add an image.", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            dialog.dismiss();
-                        }
-                    }
-                });
 
             }
         });
     }
 
-    private void opengallery(View view1) {
+    private void opengallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
         startActivityForResult(intent,1);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==RESULT_OK){
-            if (resultCode == 0){
+        if(resultCode==RESULT_OK){
+            if (requestCode == 0){
                 Bundle bundle = data.getExtras();
                 Bitmap bitmap = (Bitmap) bundle.get("data");
                 expense_imageIV.setImageBitmap(bitmap);
             }
-            else if(resultCode == 1){
+            else if(requestCode == 1){
                 Uri uri =data.getData();
                 expense_imageIV.setImageURI(uri);
             }
         }
     }
 
-    private void openCamera(View view) {
+    private void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent,0);
     }
