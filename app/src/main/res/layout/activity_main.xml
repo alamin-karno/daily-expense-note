@@ -26,20 +26,37 @@
                 android:textStyle="bold"/>
         </androidx.appcompat.widget.Toolbar>
 
-        <Spinner
-            android:id="@+id/expense_typeSP"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"/>
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            android:padding="10dp">
+            <Spinner
+                android:id="@+id/expense_typeSP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"/>
+        </androidx.cardview.widget.CardView>
+
 
         <EditText
             android:id="@+id/expense_amountET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="Enter expense amount"
-            android:layout_margin="10dp"
-            android:inputType="number"/>
+            android:textSize="16sp"
+            android:textColor="#1976D2"
+            android:textAlignment="center"
+            android:textColorHint="#1976D2"
+            android:padding="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btnbg"
+            android:inputType="numberDecimal"/>
 
         <Button
             android:id="@+id/expense_dateET"
@@ -47,39 +64,60 @@
             android:layout_height="wrap_content"
             android:hint="Enter expense date"
             android:textAllCaps="false"
+            android:textColor="#1976D2"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
             android:drawableRight="@drawable/date"
-            android:textColorHint="#000"
-            android:layout_margin="10dp"/>
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:background="@drawable/btnbg"
+            android:textColorHint="#1976D2"/>
 
         <Button
             android:id="@+id/expense_timeET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter expense time (optional)"
+            android:background="@drawable/btnbg"
+            android:textSize="16sp"
+            android:textColor="#1976D2"
+            android:textColorHint="#1976D2"
             android:textAllCaps="false"
             android:drawableRight="@drawable/time"
-            android:layout_margin="10dp"/>
+            android:padding="8dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:orientation="horizontal">
             <ImageView
                 android:id="@+id/expense_imageIV"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight=".3"
-                android:src="@drawable/file"/>
+                android:src="@drawable/file"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"/>
             <Button
                 android:id="@+id/expense_docBTN"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".7"
                 android:hint="Add document (if any)"
+                android:textSize="14sp"
+                android:textColorHint="#1976D2"
                 android:textAllCaps="false"
+                android:background="@drawable/btnbg"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"/>
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="15dp"/>
         </LinearLayout>
 
         <Button
@@ -87,8 +125,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add expense"
+            android:textColor="#FFF"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:background="@drawable/btnfullbg"
             android:textAllCaps="false"
-            android:layout_margin="10dp"/>
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"/>
 
 
     </LinearLayout>
