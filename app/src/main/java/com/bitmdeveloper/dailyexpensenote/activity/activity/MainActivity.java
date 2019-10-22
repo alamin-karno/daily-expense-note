@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText expense_amountET;
     private DatabaseHelper helper;
 
-    private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Electricity Bill","Internet Bill","Phone Bill"};
+    private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
     private String expensetype,amount,date,time,doc;
+    private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +72,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                amount = expense_amountET.getText().toString();
-                date = expense_dateBTN.getText().toString();
-                time = expense_timeBTN.getText().toString();
+                expensetype = expense_typeSP.getSelectedItem().toString();
+                amount = expense_amountET.getText().toString().trim();
+                date = expense_dateBTN.getText().toString().trim();
+                time = expense_timeBTN.getText().toString().trim();
                 doc = expense_docBTN.getText().toString();
 
 
@@ -88,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 else {
-                    long id = helper.insertdata(expensetype,amount,date,time,doc);
+
+                    long result_id = helper.insertdata(expensetype,amount,date,time,doc);
                     Toast.makeText(MainActivity.this, expensetype+" "+amount+" TAKA inserted.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
                     startActivity(intent);
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Time time = new Time(hour,min,0);
 
-                        expense_timeBTN.setText(timeFormat.format(time));
+                        expense_timeBTN.setText(timeFormat.format(time).toString());
                         dialog.dismiss();
 
                     }
@@ -255,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+
         expense_amountET = findViewById(R.id.expense_amountET);
         expense_dateBTN = findViewById(R.id.expense_dateET);
         expense_timeBTN = findViewById(R.id.expense_timeET);

@@ -10,13 +10,13 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "Expense.db";
-    private static String TABLE_NAME = "Expense";
+    private static String TABLE_NAME = "expense";
     public static String COL_ID = "Id";
-    public static String COL_TYPE = "Expense_type";
-    public static String COL_AMOUNT = "Expens_amount";
-    public static String COL_DATE = "Expense_date";
-    private static String COL_TIME = "Expense_time";
-    private static String COL_DOC = "Expense_doc";
+    public static String COL_TYPE = "type";
+    public static String COL_AMOUNT = "amount";
+    public static String COL_DATE = "date";
+    public static String COL_TIME = "time";
+    public static String COL_DOC = "doc";
     private static int VERSION = 1;
 
     private String createTable = "create table "+TABLE_NAME+" ("+COL_ID+" Integer primary key autoincrement, "+COL_TYPE+" TEXT, "+COL_AMOUNT+" TEXT, "
@@ -49,12 +49,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public Cursor getData(){
         String getTable = "Select * From "+TABLE_NAME;
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(getTable,null);
         return cursor;
     }
     public Integer deleteData(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME,COL_ID,new String[]{COL_ID.toString()});
+        int deleteID = db.delete(TABLE_NAME,COL_ID + "=" +id,null);
+        return deleteID;
+    }
+    public Cursor getSpecificData(String sql) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        return sqLiteDatabase.rawQuery(sql,null);
     }
 }

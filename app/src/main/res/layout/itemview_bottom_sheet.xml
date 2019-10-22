@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#1976D2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Expense Details:"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFF"
+            android:textAlignment="center"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#CFCBCB"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="#1976D2"
+        android:textStyle="bold"
+        android:text="Expense Type :"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/expense_TypeTV"
+        android:layout_marginBottom="5dp"
+        android:text="Expense Type"
+        android:textSize="16sp"
+        android:textColor="#42A5F5"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="#1976D2"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:text="Expense Amount :"
+        android:layout_marginLeft="10dp"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/expense_AmountTV"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="Expense Amount"
+        android:textColor="#42A5F5"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="#1976D2"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="Expense Date :"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/expense_DateTV"
+        android:layout_marginBottom="5dp"
+        android:text="Expense Date"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"
+        android:textColor="#42A5F5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="#1976D2"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:text="Expense Time :"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/expense_TimeTV"
+        android:layout_marginBottom="10dp"
+        android:text="Expense Time"
+        android:layout_marginLeft="10dp"
+        android:textSize="16sp"
+        android:textColor="#42A5F5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <Button
+        android:background="@drawable/btnfullbg"
+        android:textColor="#ffffff"
+        android:id="@+id/showDocumentBtnId"
+        android:textAllCaps="false"
+        android:layout_margin="10dp"
+        android:text="Show Document"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
+
+</LinearLayout>
