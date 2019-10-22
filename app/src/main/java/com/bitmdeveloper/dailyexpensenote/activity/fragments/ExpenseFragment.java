@@ -69,4 +69,5 @@ public class ExpenseFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+
 }

@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "Expense.db";
     private static String TABLE_NAME = "Expense";
-    private static String COL_ID = "Id";
+    public static String COL_ID = "Id";
     public static String COL_TYPE = "Expense_type";
     public static String COL_AMOUNT = "Expens_amount";
     public static String COL_DATE = "Expense_date";
@@ -52,5 +52,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(getTable,null);
         return cursor;
+    }
+    public Integer deleteData(Integer id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NAME,COL_ID,new String[]{COL_ID.toString()});
     }
 }

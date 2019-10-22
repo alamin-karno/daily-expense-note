@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +25,8 @@ public class ExpenseActivity extends AppCompatActivity {
 
    private BottomNavigationView bottomNavigationView;
    private FloatingActionButton favicon;
-    private Spinner expense_typeSP;
+   private Spinner expense_typeSP;
+   private float x1,x2,y1,y2;
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Electricity Bill","Internet Bill","Phone Bill"};
     private String expensetype;
@@ -32,7 +34,6 @@ public class ExpenseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
-
         init();
 
         replaceFragment(new DashboardFragment());
@@ -54,14 +55,7 @@ public class ExpenseActivity extends AppCompatActivity {
         expense_typeSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //if(adapterView.getItemAtPosition(i).equals("Select expense type")){
-                //     Toast.makeText(MainActivity.this, "Select the type of expense.", Toast.LENGTH_SHORT).show();
-                // }
-                // else{
                 expensetype = adapterView.getSelectedItem().toString();
-
-                //Toast.makeText(MainActivity.this, expensetype+" selected.", Toast.LENGTH_SHORT).show();
-                //  }
             }
 
             @Override
@@ -87,7 +81,9 @@ public class ExpenseActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_expense:
-                        replaceFragment(new ExpenseFragment());
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frame_layout,new ExpenseFragment()).addToBackStack(null).commit();
+                        //replaceFragment(new ExpenseFragment());
                         return true;
                     case R.id.nav_dashboard:
                         replaceFragment(new DashboardFragment());
@@ -101,7 +97,12 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
+        //if(fragment == new ExpenseFragment()){
+            fragmentTransaction.replace(R.id.frame_layout,fragment);
+       // }
+       // else {
+            fragmentTransaction.replace(R.id.frame_layout,fragment);
+       // }
         fragmentTransaction.commit();
     }
 
