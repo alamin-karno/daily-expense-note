@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitmdeveloper.dailyexpensenote.R;
+import com.bitmdeveloper.dailyexpensenote.activity.activity.MainActivity;
 import com.bitmdeveloper.dailyexpensenote.activity.database.DatabaseHelper;
 import com.bitmdeveloper.dailyexpensenote.activity.fragments.ExpenseFragment;
 import com.bitmdeveloper.dailyexpensenote.activity.model_class.Expense;
@@ -106,7 +108,9 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()){
                             case R.id.nav_update:
-                                Toast.makeText(context, "Update", Toast.LENGTH_SHORT).show();
+                                update(expense);
+
+                                return true;
 
                             case R.id.nav_delete:
                               Cursor cursor = ExpenseFragment.helper.getSpecificData("SELECT Id FROM expense");
@@ -129,6 +133,20 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             }
         });
 
+
+    }
+
+    private void update(Expense expense) {
+        Intent intent = new Intent(context, MainActivity.class);
+
+        intent.putExtra("EXPENSE_ID",expense.getId());
+        intent.putExtra("EXPENSE_TYPE",expense.getExpense_type());
+        intent.putExtra("EXPENSE_AMOUNT",expense.getExpense_amount());
+        intent.putExtra("EXPENSE_DATE",expense.getExpense_date());
+        intent.putExtra("EXPENSE_TIME",expense.getExpenseTime());
+        intent.putExtra("EXPENSE_IMAGE",expense.getExpenseImage());
+
+        context.startActivity(intent);
 
     }
 

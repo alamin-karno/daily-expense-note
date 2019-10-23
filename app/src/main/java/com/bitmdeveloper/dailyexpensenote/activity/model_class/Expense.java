@@ -1,11 +1,12 @@
 package com.bitmdeveloper.dailyexpensenote.activity.model_class;
 
 public class Expense {
-    private String expense_type,expense_amount,expense_date,expenseTime,expenseImage;
+    private String id, expense_type,expense_amount,expense_date,expenseTime,expenseImage;
     public Expense() {
     }
 
-    public Expense(String expense_type, String expense_amount, String expense_date, String expenseTime, String expenseImage) {
+    public Expense(String id,String expense_type, String expense_amount, String expense_date, String expenseTime, String expenseImage) {
+        this.id = id;
         this.expense_type = expense_type;
         this.expense_amount = expense_amount;
         this.expense_date = expense_date;
@@ -13,6 +14,10 @@ public class Expense {
         this.expenseImage = expenseImage;
     }
 
+    public String getId() {
+
+        return id;
+    }
 
 
     public String getExpense_type() {

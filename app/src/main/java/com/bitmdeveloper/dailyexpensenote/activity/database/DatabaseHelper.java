@@ -38,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public long insertdata(String type,String amount,String date,String time,String doc){
         ContentValues values = new ContentValues();
+
         values.put(COL_TYPE,type);
         values.put(COL_AMOUNT,amount);
         values.put(COL_DATE,date);

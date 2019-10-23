@@ -61,6 +61,7 @@ public class ExpenseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_expense, container, false);
+
         init(view);
 
         getFromDate();
@@ -69,6 +70,7 @@ public class ExpenseFragment extends Fragment {
 
         getdata();
 
+        //Filtering();
 
         return view;
     }
@@ -157,13 +159,14 @@ public class ExpenseFragment extends Fragment {
         //expenseList.clear();
         Cursor cursor = helper.showData();
         while (cursor.moveToNext()){
+            String expense_id = cursor.getString(cursor.getColumnIndex(helper.COL_ID));
             String expense_type = cursor.getString(cursor.getColumnIndex(helper.COL_TYPE));
             String expense_amount = cursor.getString(cursor.getColumnIndex(helper.COL_AMOUNT));
             String expense_date = cursor.getString(cursor.getColumnIndex(helper.COL_DATE));
             String expense_time = cursor.getString(cursor.getColumnIndex(helper.COL_TIME));
             String expese_doc = cursor.getString(cursor.getColumnIndex(helper.COL_DOC));
 
-            expenseList.add(new Expense(expense_type,expense_amount,expense_date,expense_time,expese_doc));
+            expenseList.add(new Expense(expense_id,expense_type,expense_amount,expense_date,expense_time,expese_doc));
 
             adapter.notifyDataSetChanged();
         }

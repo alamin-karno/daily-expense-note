@@ -10,9 +10,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -40,14 +43,17 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner expense_typeSP;
     private Button expense_docBTN,expense_dateBTN,expense_timeBTN,add_expenseBTN;
+    private TextView settileTV;
     private ImageView expense_imageIV;
     private EditText expense_amountET;
     private DatabaseHelper helper;
+    private ArrayAdapter<String> arrayAdapter;
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
     private String type,amount,date,time,doc;
     private String idIntent;
     private Bitmap bitmappic = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +69,50 @@ public class MainActivity extends AppCompatActivity {
 
         getImage();
 
+        getUpdateIntent();
+
         addexpense();
 
 
+
+
+    }
+
+    private void getUpdateIntent() {
+        idIntent = getIntent().getStringExtra("EXPENSE_ID");
+        Bitmap bitmapImageIntent = stringToBitmap(getIntent().getStringExtra("EXPENSE_IMAGE"));
+
+        if(idIntent != null){
+
+            int spinnerItemPosition = arrayAdapter.getPosition(getIntent().getStringExtra("EXPENSE_TYPE"));
+            expense_typeSP.setSelection(spinnerItemPosition);
+            expense_amountET.setText(getIntent().getStringExtra("EXPENSE_AMOUNT"));
+            expense_dateBTN.setText(getIntent().getStringExtra("EXPENSE_DATE"));
+            expense_timeBTN.setText(getIntent().getStringExtra("EXPENSE_TIME"));
+
+            if(bitmapImageIntent != null){
+                bitmappic = bitmapImageIntent;
+                expense_imageIV.setImageBitmap(bitmappic);
+
+            }else {
+                expense_imageIV.setImageResource(R.drawable.file);
+            }
+            settileTV.setText("Update "+getIntent().getStringExtra("EXPENSE_TYPE"));
+            add_expenseBTN.setText("Update Expense");
+        }
+
+    }
+
+    private Bitmap stringToBitmap(String expense_image) {
+
+        try {
+            byte [] encodeByte= Base64.decode(expense_image,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     private void addexpense() {
@@ -259,7 +306,8 @@ public class MainActivity extends AppCompatActivity {
         expense_docBTN = findViewById(R.id.expense_docBTN);
         expense_imageIV = findViewById(R.id.expense_imageIV);
         add_expenseBTN = findViewById(R.id.add_expenseBTN);
-
+        settileTV = findViewById(R.id.titleTV);
+        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,categories);
         helper = new DatabaseHelper(this);
 
     }

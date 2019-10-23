@@ -59,9 +59,41 @@ public class DashboardFragment extends Fragment {
 
         getToDate();
 
-
+        sumExpenses();
 
         return view;
+    }
+
+    private void sumExpenses() {
+
+        expensetype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0)
+                {
+                    Cursor cursor = helper.getSpecificData("SELECT SUM (expense_amount) AS total FROM expense");
+                    if (cursor.moveToFirst()) {
+                        int total = cursor.getInt(cursor.getColumnIndex("total"));
+                        totalExpenseTV.setText(String.valueOf(total));
+                    }
+                }
+
+//                else if(position == 1){
+//                    Cursor cursor = helper.getSpecificData("SELECT SUM (expense_amount) AS total FROM expense WHERE expense_type = 'Breakfast'");
+//                    if (cursor.moveToFirst()) {
+//                        int total = cursor.getInt(cursor.getColumnIndex("total"));
+//                        totalExpenseTV.setText(String.valueOf(total));
+//                    }
+//                }
+//
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
