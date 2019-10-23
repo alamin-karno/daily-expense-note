@@ -2,6 +2,7 @@ package com.bitmdeveloper.dailyexpensenote.activity.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import com.bitmdeveloper.dailyexpensenote.R;
 import com.bitmdeveloper.dailyexpensenote.activity.database.DatabaseHelper;
+import com.bitmdeveloper.dailyexpensenote.activity.fragments.ExpenseFragment;
 import com.bitmdeveloper.dailyexpensenote.activity.model_class.Expense;
 
 import java.sql.Time;
@@ -140,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 else {
 
                     helper.insertdata(type, amount, date, time, doc);
-                    Toast.makeText(MainActivity.this, type + " " + amount + " TK inserted.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, type + " " + amount + " TK inserted.", Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(MainActivity.this, ExpenseActivity.class);
                     startActivity(intent);
 
