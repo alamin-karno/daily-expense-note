@@ -6,7 +6,7 @@
         android:icon="@drawable/dashboard"
         android:id="@+id/nav_dashboard"/>
     <item
-        android:title="Expesnse"
+        android:title="Expense"
         android:icon="@drawable/tk"
         android:id="@+id/nav_expense"/>
 

@@ -27,7 +27,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase sqLiteDatabase)
+    {
         sqLiteDatabase.execSQL(createTable);
     }
 
@@ -53,6 +54,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery(getTable,null);
         return cursor;
     }
+
+    public int deleteDataFromDatabase(int rowId) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        int deleteId = sqLiteDatabase.delete(TABLE_NAME, COL_ID + "=" + rowId, null);
+        return deleteId;
+    }
+
+
     public Integer deleteData(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
         int deleteID = db.delete(TABLE_NAME,COL_ID + "=" +id,null);

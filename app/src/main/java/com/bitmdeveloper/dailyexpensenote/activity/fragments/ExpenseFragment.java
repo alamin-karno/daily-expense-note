@@ -46,7 +46,7 @@ public class ExpenseFragment extends Fragment {
     private ArrayAdapter<String> arrayAdapter;
     private RecyclerView recyclerView;
     private ExpenseAdapter adapter;
-    private DatabaseHelper helper;
+    public static DatabaseHelper helper;
 
     private TextView fromDateTV,toDateTV;
     private String fromdate;
