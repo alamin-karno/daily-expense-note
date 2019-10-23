@@ -2,7 +2,6 @@ package com.bitmdeveloper.dailyexpensenote.activity.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -10,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,14 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bitmdeveloper.dailyexpensenote.R;
-import com.bitmdeveloper.dailyexpensenote.activity.activity.MainActivity;
-import com.bitmdeveloper.dailyexpensenote.activity.database.DatabaseHelper;
-import com.bitmdeveloper.dailyexpensenote.activity.fragments.ExpenseFragment;
 import com.bitmdeveloper.dailyexpensenote.activity.model_class.Expense;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.navigation.NavigationView;
 
-import java.sql.Array;
+
+
 import java.util.List;
 
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
@@ -38,7 +31,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     Context context;
     private TextView expenseType,expenseAmount,expenseDate,expenseTime;
     private Button showDocumentBtn;
-    private static DatabaseHelper databaseHelper;
+
     public ExpenseAdapter(List<Expense> expenses, Context context) {
         this.expenses = expenses;
         this.context = context;
