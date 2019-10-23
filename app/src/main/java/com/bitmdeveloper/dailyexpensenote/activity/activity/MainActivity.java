@@ -45,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper helper;
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
-    private String expensetype,amount,date,time,doc;
-    private String id;
+    private String type,amount,date,time,doc;
+    private String idIntent;
+    private Bitmap bitmappic = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,14 +73,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                expensetype = expense_typeSP.getSelectedItem().toString();
+                type = expense_typeSP.getSelectedItem().toString();
                 amount = expense_amountET.getText().toString().trim();
                 date = expense_dateBTN.getText().toString().trim();
                 time = expense_timeBTN.getText().toString().trim();
                 doc = expense_docBTN.getText().toString();
 
 
-                if(expensetype.equals("Select expense type")){
+                if(type.equals("Select expense type")){
                     Toast.makeText(MainActivity.this, "Please select an expense type.", Toast.LENGTH_SHORT).show();
                 }
                 else if(amount.equals("")){
@@ -91,12 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
                 else {
 
-                    long result_id = helper.insertdata(expensetype,amount,date,time,doc);
-                    Toast.makeText(MainActivity.this, expensetype+" "+amount+" TAKA inserted.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
+                    helper.insertdata(type, amount, date, time, doc);
+                    Toast.makeText(MainActivity.this, type + " " + amount + " TK inserted.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, ExpenseActivity.class);
                     startActivity(intent);
 
-                   // Toast.makeText(MainActivity.this, "Type-"+expensetype+", Amount-"+amount+", Date-"+date+", Time-"+time, Toast.LENGTH_LONG).show();
                 }
 
 
@@ -239,19 +239,12 @@ public class MainActivity extends AppCompatActivity {
         expense_typeSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //if(adapterView.getItemAtPosition(i).equals("Select expense type")){
-               //     Toast.makeText(MainActivity.this, "Select the type of expense.", Toast.LENGTH_SHORT).show();
-              // }
-              // else{
-                    expensetype = adapterView.getSelectedItem().toString();
-
-                    //Toast.makeText(MainActivity.this, expensetype+" selected.", Toast.LENGTH_SHORT).show();
-              //  }
+                    type = adapterView.getSelectedItem().toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(MainActivity.this, "Select expense type.", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -266,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
         expense_docBTN = findViewById(R.id.expense_docBTN);
         expense_imageIV = findViewById(R.id.expense_imageIV);
         add_expenseBTN = findViewById(R.id.add_expenseBTN);
+
         helper = new DatabaseHelper(this);
 
     }

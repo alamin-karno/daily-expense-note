@@ -13,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String TABLE_NAME = "expense";
     public static String COL_ID = "Id";
     public static String COL_TYPE = "type";
-    public static String COL_AMOUNT = "amount";
+    public static String COL_AMOUNT = "expense_amount";
     public static String COL_DATE = "date";
     public static String COL_TIME = "time";
     public static String COL_DOC = "doc";
@@ -47,7 +47,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return id;
     }
-    public Cursor getData(){
+    public Cursor showData(){
         String getTable = "Select * From "+TABLE_NAME;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(getTable,null);
@@ -59,7 +59,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return deleteID;
     }
     public Cursor getSpecificData(String sql) {
-
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         return sqLiteDatabase.rawQuery(sql,null);
     }

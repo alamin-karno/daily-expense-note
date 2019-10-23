@@ -59,118 +59,50 @@ public class DashboardFragment extends Fragment {
 
         getToDate();
 
-        getSpinnerData();
+
 
         return view;
     }
 
-    private void getSpinnerData() {
-        expensetype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                if(pos == 0) {
-                    Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense");
-                    if (cursor.moveToNext()) {
-                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-                        totalExpenseTV.setText(String.valueOf(total));
-                    }
-                }
-                else if(pos == 1) {
-                        Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense WHERE expense_type = 'Breakfast'");
-                        if (cursor.moveToNext()) {
-                            int total = cursor.getInt(cursor.getColumnIndex("total"));
-                            totalExpenseTV.setText(String.valueOf(total));
-                        }
-                    }
-                else if(pos == 2) {
-                    Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense WHERE expense_type = 'Lunch'");
-                    if (cursor.moveToNext()) {
-                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-                        totalExpenseTV.setText(String.valueOf(total));
-                    }
-                }
-                else if(pos == 3) {
-                    Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense WHERE expense_type = 'Dinner'");
-                    if (cursor.moveToNext()) {
-                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-                        totalExpenseTV.setText(String.valueOf(total));
-                    }
-                }
-                else if(pos == 4) {
-                    Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense WHERE expense_type = 'Transport Cost'");
-                    if (cursor.moveToNext()) {
-                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-                        totalExpenseTV.setText(String.valueOf(total));
-                    }
-                }
-                else if(pos == 5) {
-                    Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense WHERE expense_type = 'Medicine'");
-                    if (cursor.moveToNext()) {
-                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-                        totalExpenseTV.setText(String.valueOf(total));
-                    }
-                }
-                else if(pos == 6) {
-                    Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense WHERE expense_type = 'Phone Bill'");
-                    if (cursor.moveToNext()) {
-                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-                        totalExpenseTV.setText(String.valueOf(total));
-                    }
-                }
-                else if(pos == 7) {
-                    Cursor cursor = helper.getSpecificData("SELECT SUM (amount) AS total FROM expense WHERE expense_type = 'Others'");
-                    if (cursor.moveToNext()) {
-                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-                        totalExpenseTV.setText(String.valueOf(total));
-                    }
-                }
-
-
-
-
-                }
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-    }
 
     private void getToDate() {
-        if(fromdate != null){
-            DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    month = month+1;
+        toDateTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(fromdate != null){
+                    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                            month = month+1;
 
-                    String currentdate = day+"/"+month+"/"+year;
+                            String currentdate = day+"/"+month+"/"+year;
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-                    Date date = null;
+                            Date date = null;
 
-                    try {
-                        date = dateFormat.parse(currentdate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    toDateTV.setText(dateFormat.format(date));
+                            try {
+                                date = dateFormat.parse(currentdate);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            toDateTV.setText(dateFormat.format(date));
+                        }
+                    };
+
+                    Calendar calendar = Calendar.getInstance();
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH);
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),dateSetListener,year,month,day);
+                    datePickerDialog.show();
                 }
-            };
-
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),dateSetListener,year,month,day);
-            datePickerDialog.show();
-        }
-        else {
-            Toast.makeText(getContext(), "Select from date first", Toast.LENGTH_SHORT).show();
-        }
+                else {
+                    Toast.makeText(getContext(), "Select from date first", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void getFromDate() {
@@ -212,19 +144,15 @@ public class DashboardFragment extends Fragment {
     private void init(View view) {
         helper = new DatabaseHelper(getContext());
 
-        setSpinner(view);
+        expensetype = view.findViewById(R.id.expense_typeSP);
+        arrayAdapter = new ArrayAdapter<>(getActivity(),R.layout.support_simple_spinner_dropdown_item,expensetypeList);
+        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        expensetype.setAdapter(arrayAdapter);
 
         fromDateTV = view.findViewById(R.id.fromdateTV);
         toDateTV = view.findViewById(R.id.todateTV);
         totalExpenseTV = view.findViewById(R.id.totalExpenseTV);
 
-    }
-
-    private void setSpinner(View view) {
-        expensetype = view.findViewById(R.id.expense_typeSP);
-        arrayAdapter = new ArrayAdapter<>(getActivity(),R.layout.support_simple_spinner_dropdown_item);
-        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        expensetype.setAdapter(arrayAdapter);
     }
 
 }
