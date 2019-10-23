@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#BBDEFB">
+            android:background="#64B5F6">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -27,13 +27,14 @@
                     android:text="Expense Type"
                     android:layout_marginLeft="10dp"
                     android:textStyle="bold"
-                    android:textColor="#C4000000"
+                    android:textColor="#FFF"
                     android:textSize="18sp"
                     android:id="@+id/expense_typeTV"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Expense Date"
+                    android:textColor="#FFF"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="2dp"
                     android:textSize="16sp"
@@ -53,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/tk"
                     android:text="120"
+                    android:textColor="#FFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:id="@+id/expense_amountTV"/>
