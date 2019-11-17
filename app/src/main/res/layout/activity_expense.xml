@@ -11,6 +11,7 @@
         android:background="@color/colorPrimary"
         android:id="@+id/toobar">
         <TextView
+            android:id="@+id/titleTV"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Expense"
