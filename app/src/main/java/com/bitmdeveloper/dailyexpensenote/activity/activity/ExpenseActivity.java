@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitmdeveloper.dailyexpensenote.R;
@@ -24,6 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ExpenseActivity extends AppCompatActivity {
 
    private BottomNavigationView bottomNavigationView;
+   private TextView titileTV;
 
 
     @Override
@@ -32,8 +34,6 @@ public class ExpenseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_expense);
 
         init();
-
-
 
         replaceFragment(new DashboardFragment());
 
@@ -55,9 +55,11 @@ public class ExpenseActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_expense:
+                        titileTV.setText("Expense");
                         replaceFragment(new ExpenseFragment());
                         return true;
                     case R.id.nav_dashboard:
+                        titileTV.setText("DashBoard");
                         replaceFragment(new DashboardFragment());
                         return true;
                 }
@@ -75,6 +77,8 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void init() {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        titileTV = findViewById(R.id.titleTV);
+        titileTV.setText("DashBoard");
 
     }
 }
