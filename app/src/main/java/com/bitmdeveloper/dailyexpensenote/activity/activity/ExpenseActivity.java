@@ -35,6 +35,8 @@ public class ExpenseActivity extends AppCompatActivity {
 
         init();
 
+
+
         replaceFragment(new DashboardFragment());
 
         bottomNavigation();
