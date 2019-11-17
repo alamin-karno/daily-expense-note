@@ -32,6 +32,7 @@ import com.bitmdeveloper.dailyexpensenote.R;
 import com.bitmdeveloper.dailyexpensenote.activity.database.DatabaseHelper;
 import com.bitmdeveloper.dailyexpensenote.activity.model_class.Expense;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,14 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private Spinner expense_typeSP;
     private Button expense_docBTN,expense_dateBTN,expense_timeBTN,add_expenseBTN;
     private TextView settileTV;
-    private ImageView expense_imageIV;
+    private ImageView expense_imageIV,cancelimageIV;
     private EditText expense_amountET;
     private DatabaseHelper helper;
     private ArrayAdapter<String> arrayAdapter;
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
     private String type,amount,date,time,doc;
-    private String idIntent;
+    private String idIntent,uriImage,updateimage;
     private Bitmap bitmappic = null;
 
     @Override
@@ -73,15 +74,22 @@ public class MainActivity extends AppCompatActivity {
 
         addexpense();
 
-
+        cancelimageIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bitmappic = null;
+                expense_imageIV.setImageResource(R.drawable.file);
+                cancelimageIV.setVisibility(View.INVISIBLE);
+            }
+        });
 
 
     }
 
     private void getUpdateIntent() {
         idIntent = getIntent().getStringExtra("EXPENSE_ID");
-        Bitmap bitmapImageIntent = stringToBitmap(getIntent().getStringExtra("EXPENSE_IMAGE"));
-
+        updateimage = getIntent().getStringExtra("EXPENSE_IMAGE");
+        bitmappic = stringToBitmap(updateimage);
         if(idIntent != null){
 
             int spinnerItemPosition = arrayAdapter.getPosition(getIntent().getStringExtra("EXPENSE_TYPE"));
@@ -90,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
             expense_dateBTN.setText(getIntent().getStringExtra("EXPENSE_DATE"));
             expense_timeBTN.setText(getIntent().getStringExtra("EXPENSE_TIME"));
 
-            if(bitmapImageIntent != null){
-                bitmappic = bitmapImageIntent;
+            if(bitmappic != null){
                 expense_imageIV.setImageBitmap(bitmappic);
+                cancelimageIV.setVisibility(View.VISIBLE);
 
             }else {
                 expense_imageIV.setImageResource(R.drawable.file);
@@ -103,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private Bitmap stringToBitmap(String expense_image) {
+    private Bitmap stringToBitmap(String updateimage) {
 
         try {
-            byte [] encodeByte= Base64.decode(expense_image,Base64.DEFAULT);
+            byte [] encodeByte= Base64.decode(updateimage,Base64.DEFAULT);
             Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
         } catch(Exception e) {
@@ -139,16 +147,75 @@ public class MainActivity extends AppCompatActivity {
 
                 else {
 
-                    helper.insertdata(type, amount, date, time, doc);
-                    Toast.makeText(MainActivity.this, type + " " + amount + " TK inserted.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this, ExpenseActivity.class);
-                    startActivity(intent);
+                    if(idIntent != null){
+                        long resultId = helper.updatedata(idIntent,type,amount,date,time,bitmapToString(bitmappic));
+
+                        if (resultId > 0){
+                            Toast.makeText(MainActivity.this, "Updated Successfully.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+
+                        if(bitmappic !=null){
+                            long resultId = helper.insertdata(type, amount, date, time, bitmapToString(bitmappic));
+
+                            if(resultId > 0){
+                                setResult(RESULT_OK);
+                                Toast.makeText(MainActivity.this, "Data inserted Successfully.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(MainActivity.this, "Data did not insert.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else if(uriImage !=null){
+
+                            long resultId = helper.insertdata(type,amount,date,time,uriImage);
+                            if(resultId > 0){
+                                setResult(RESULT_OK);
+                                Toast.makeText(MainActivity.this, "Data inserted Successfully.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(MainActivity.this, "Data did not inserted.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else {
+                            long resultId = helper.insertdata(type, amount, date, time, null);
+
+                            if(resultId > 0){
+                                setResult(RESULT_OK);
+                                Toast.makeText(MainActivity.this, "Data inserted Successfully.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(MainActivity.this, "Data did not inserted.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+
+                    }
+
+
+
 
                 }
 
 
             }
         });
+    }
+
+    private String bitmapToString(Bitmap bitmappic) {
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmappic.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String stringImage=Base64.encodeToString(b, Base64.DEFAULT);
+        return stringImage;
     }
 
     private void gettime() {
@@ -262,12 +329,15 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode==RESULT_OK){
             if (requestCode == 0){
                 Bundle bundle = data.getExtras();
-                Bitmap bitmap = (Bitmap) bundle.get("data");
-                expense_imageIV.setImageBitmap(bitmap);
+                bitmappic = (Bitmap) bundle.get("data");
+                expense_imageIV.setImageBitmap(bitmappic);
+                cancelimageIV.setVisibility(View.VISIBLE);
             }
             else if(requestCode == 1){
                 Uri uri =data.getData();
                 expense_imageIV.setImageURI(uri);
+                uriImage =  uri.toString();
+                cancelimageIV.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -298,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-
+        cancelimageIV = findViewById(R.id.cancelimageIV);
         expense_amountET = findViewById(R.id.expense_amountET);
         expense_dateBTN = findViewById(R.id.expense_dateET);
         expense_timeBTN = findViewById(R.id.expense_timeET);

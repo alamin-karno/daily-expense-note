@@ -2,12 +2,14 @@ package com.bitmdeveloper.dailyexpensenote.activity.fragments;
 
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,10 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitmdeveloper.dailyexpensenote.R;
+import com.bitmdeveloper.dailyexpensenote.activity.activity.ExpenseActivity;
 import com.bitmdeveloper.dailyexpensenote.activity.activity.MainActivity;
 import com.bitmdeveloper.dailyexpensenote.activity.adapter.ExpenseAdapter;
 import com.bitmdeveloper.dailyexpensenote.activity.database.DatabaseHelper;
 import com.bitmdeveloper.dailyexpensenote.activity.model_class.Expense;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,7 +54,7 @@ public class ExpenseFragment extends Fragment {
 
     private TextView fromDateTV,toDateTV;
     private String fromdate;
-
+    private FloatingActionButton favicon;
     public ExpenseFragment() {
         // Required empty public constructor
     }
@@ -64,18 +68,95 @@ public class ExpenseFragment extends Fragment {
 
         init(view);
 
+        getexpense();
+
+        fabscroll();
+
         getFromDate();
 
         getToDate();
 
         getdata();
 
-        //Filtering();
+        notifyRecyclerView();
+
+       // Filtering();
 
         return view;
     }
 
+    private void notifyRecyclerView() {
+        adapter = new ExpenseAdapter(expenseList,getContext());
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
+    }
 
+    private void Filtering() {
+        expensetype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    getdata();
+                    notifyRecyclerView();
+                }
+                else if(position == 1){
+                    Cursor cursor = helper.getSpecificData("SELECT * FROM expense WHERE expense_type = 'Breakfast'");
+                   // setData(cursor);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setData(Cursor cursor) {
+        expenseList.clear();
+        while (cursor.moveToNext()){
+            String expense_id = cursor.getString(cursor.getColumnIndex(helper.COL_ID));
+            String expense_type = cursor.getString(cursor.getColumnIndex(helper.COL_TYPE));
+            String expense_amount = cursor.getString(cursor.getColumnIndex(helper.COL_AMOUNT));
+            String expense_date = cursor.getString(cursor.getColumnIndex(helper.COL_DATE));
+            String expense_time = cursor.getString(cursor.getColumnIndex(helper.COL_TIME));
+            String expese_doc = cursor.getString(cursor.getColumnIndex(helper.COL_DOC));
+
+            expenseList.add(new Expense(expense_id,expense_type,expense_amount,expense_date,expense_time,expese_doc));
+        }
+        notifyRecyclerView();
+    }
+
+
+    private void fabscroll() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if(dy>0){
+                    favicon.hide();
+                }
+                else if(dy<0){
+                    favicon.show();
+                }
+            }
+        });
+    }
+
+    private void getexpense() {
+        favicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
     private void getToDate() {
         toDateTV.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +237,7 @@ public class ExpenseFragment extends Fragment {
     }
 
     private void getdata() {
-        //expenseList.clear();
+        expenseList.clear();
         Cursor cursor = helper.showData();
         while (cursor.moveToNext()){
             String expense_id = cursor.getString(cursor.getColumnIndex(helper.COL_ID));
@@ -168,19 +249,20 @@ public class ExpenseFragment extends Fragment {
 
             expenseList.add(new Expense(expense_id,expense_type,expense_amount,expense_date,expense_time,expese_doc));
 
-            adapter.notifyDataSetChanged();
         }
+        notifyRecyclerView();
     }
 
 
     private void init(View view) {
-
+        favicon = view.findViewById(R.id.favicon);
         expenseList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.expenseRecycleView);
         helper = new DatabaseHelper(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ExpenseAdapter(expenseList,getContext());
-        recyclerView.setAdapter(adapter);
+
+
+
 
         setSpinner(view);
 

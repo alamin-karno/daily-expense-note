@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ExpenseActivity extends AppCompatActivity {
 
    private BottomNavigationView bottomNavigationView;
-   private FloatingActionButton favicon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
         bottomNavigation();
 
-        getexpense();
+
 
 
 
@@ -45,15 +45,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
 
 
-    private void getexpense() {
-        favicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ExpenseActivity.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+
 
     private void bottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -81,6 +73,6 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void init() {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        favicon = findViewById(R.id.favicon);
+
     }
 }
