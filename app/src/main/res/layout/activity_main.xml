@@ -97,14 +97,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/expense_imageIV"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_weight=".3"
-                android:src="@drawable/file"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"/>
+                android:layout_weight=".3">
+                <ImageView
+                    android:id="@+id/expense_imageIV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/file" />
+                <ImageView
+                    android:id="@+id/cancelimageIV"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_cancel_black_24dp"/>
+
+            </RelativeLayout>
+
             <Button
                 android:id="@+id/expense_docBTN"
                 android:layout_width="0dp"

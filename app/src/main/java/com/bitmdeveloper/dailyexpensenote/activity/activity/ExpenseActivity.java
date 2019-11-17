@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitmdeveloper.dailyexpensenote.R;
@@ -25,8 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ExpenseActivity extends AppCompatActivity {
 
    private BottomNavigationView bottomNavigationView;
-   private FloatingActionButton favicon;
-   private TextView titleTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +39,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
         bottomNavigation();
 
-        getexpense();
+
 
 
 
@@ -49,15 +47,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
 
 
-    private void getexpense() {
-        favicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ExpenseActivity.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+
 
     private void bottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,11 +55,9 @@ public class ExpenseActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.nav_expense:
-                        titleTV.setText("Expense");
                         replaceFragment(new ExpenseFragment());
                         return true;
                     case R.id.nav_dashboard:
-                        titleTV.setText("Dashboard");
                         replaceFragment(new DashboardFragment());
                         return true;
                 }
@@ -87,9 +75,6 @@ public class ExpenseActivity extends AppCompatActivity {
 
     private void init() {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        favicon = findViewById(R.id.favicon);
-        titleTV = findViewById(R.id.titleTV);
-        titleTV.setText("Dashboard");
 
     }
 }
