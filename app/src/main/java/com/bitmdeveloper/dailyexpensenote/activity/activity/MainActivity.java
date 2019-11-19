@@ -148,15 +148,31 @@ public class MainActivity extends AppCompatActivity {
                 else {
 
                     if(idIntent != null){
-                        long resultId = helper.updatedata(idIntent,type,amount,date,time,bitmapToString(bitmappic));
 
-                        if (resultId > 0){
-                            Toast.makeText(MainActivity.this, "Updated Successfully.", Toast.LENGTH_SHORT).show();
-                            finish();
+                        if(bitmappic != null){
+                            long resultId = helper.updatedata(idIntent,type,amount,date,time,bitmapToString(bitmappic));
+
+                            if (resultId > 0){
+                                Toast.makeText(MainActivity.this, "Updated Successfully.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else {
-                            Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
+                            long resultId = helper.updatedata(idIntent,type,amount,date,time,null);
+
+                            if (resultId > 0){
+                                Toast.makeText(MainActivity.this, "Updated Successfully.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
+                            }
                         }
+
+
                     }
                     else {
 
