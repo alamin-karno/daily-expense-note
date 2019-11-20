@@ -26,6 +26,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
    private BottomNavigationView bottomNavigationView;
    private TextView titileTV;
+   private String screen = null;
 
 
     @Override
@@ -35,7 +36,9 @@ public class ExpenseActivity extends AppCompatActivity {
 
         init();
 
-        replaceFragment(new DashboardFragment());
+        setScreen();
+
+
 
         bottomNavigation();
 
@@ -45,8 +48,17 @@ public class ExpenseActivity extends AppCompatActivity {
 
     }
 
-
-
+    private void setScreen() {
+        screen = getIntent().getStringExtra("setScreen");
+        if(screen != null){
+            replaceFragment(new ExpenseFragment());
+            bottomNavigationView.setSelectedItemId(R.id.nav_expense);
+        }
+        else {
+            replaceFragment(new DashboardFragment());
+            bottomNavigationView.setSelectedItemId(R.id.nav_dashboard);
+        }
+    }
 
 
     private void bottomNavigation() {

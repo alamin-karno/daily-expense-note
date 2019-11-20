@@ -33,6 +33,7 @@ import com.bitmdeveloper.dailyexpensenote.activity.database.DatabaseHelper;
 import com.bitmdeveloper.dailyexpensenote.activity.model_class.Expense;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
     private String type,amount,date,time,doc;
-    private String idIntent,uriImage,updateimage;
+    private String idIntent,updateimage;
     private Bitmap bitmappic = null;
 
     @Override
@@ -154,7 +155,10 @@ public class MainActivity extends AppCompatActivity {
 
                             if (resultId > 0){
                                 Toast.makeText(MainActivity.this, "Updated Successfully.", Toast.LENGTH_SHORT).show();
-                                finish();
+                                //finish();
+                                Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
+                                intent.putExtra("setScreen","1");
+                                startActivity(intent);
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
@@ -165,7 +169,10 @@ public class MainActivity extends AppCompatActivity {
 
                             if (resultId > 0){
                                 Toast.makeText(MainActivity.this, "Updated Successfully.", Toast.LENGTH_SHORT).show();
-                                finish();
+                                //finish();
+                                Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
+                                intent.putExtra("setScreen","1");
+                                startActivity(intent);
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
@@ -182,22 +189,13 @@ public class MainActivity extends AppCompatActivity {
                             if(resultId > 0){
                                 setResult(RESULT_OK);
                                 Toast.makeText(MainActivity.this, "Data inserted Successfully.", Toast.LENGTH_SHORT).show();
-                                finish();
+                                //finish();
+                                Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
+                                intent.putExtra("setScreen","1");
+                                startActivity(intent);
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not insert.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        else if(uriImage !=null){
-
-                            long resultId = helper.insertdata(type,amount,date,time,uriImage);
-                            if(resultId > 0){
-                                setResult(RESULT_OK);
-                                Toast.makeText(MainActivity.this, "Data inserted Successfully.", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                            else {
-                                Toast.makeText(MainActivity.this, "Data did not inserted.", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else {
@@ -206,7 +204,10 @@ public class MainActivity extends AppCompatActivity {
                             if(resultId > 0){
                                 setResult(RESULT_OK);
                                 Toast.makeText(MainActivity.this, "Data inserted Successfully.", Toast.LENGTH_SHORT).show();
-                                finish();
+                                //finish();
+                                Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
+                                intent.putExtra("setScreen","1");
+                                startActivity(intent);
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not inserted.", Toast.LENGTH_SHORT).show();
@@ -351,8 +352,12 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(requestCode == 1){
                 Uri uri =data.getData();
-                expense_imageIV.setImageURI(uri);
-                uriImage =  uri.toString();
+                try {
+                    bitmappic = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                } catch (IOException e) {
+                    Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                expense_imageIV.setImageBitmap(bitmappic);
                 cancelimageIV.setVisibility(View.VISIBLE);
             }
         }
