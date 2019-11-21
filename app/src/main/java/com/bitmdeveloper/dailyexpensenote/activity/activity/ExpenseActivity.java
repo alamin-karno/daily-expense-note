@@ -5,27 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bitmdeveloper.dailyexpensenote.R;
+import com.bitmdeveloper.dailyexpensenote.activity.swipe_class.OnSwipeTouchListener;
 import com.bitmdeveloper.dailyexpensenote.activity.fragments.DashboardFragment;
 import com.bitmdeveloper.dailyexpensenote.activity.fragments.ExpenseFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 public class ExpenseActivity extends AppCompatActivity {
 
    private BottomNavigationView bottomNavigationView;
    private TextView titileTV;
+   private FrameLayout frameLayout;
    private String screen = null;
 
 
@@ -38,14 +35,41 @@ public class ExpenseActivity extends AppCompatActivity {
 
         setScreen();
 
-
+        swipeAction();
 
         bottomNavigation();
 
 
+    }
+    @Override
+    public void onBackPressed(){
+        if(bottomNavigationView.getSelectedItemId() == R.id.nav_expense){
+            replaceFragment(new DashboardFragment());
+            bottomNavigationView.setSelectedItemId(R.id.nav_dashboard);
+        }
+        else {
+            finish();
+        }
+    }
 
+    private void swipeAction() {
+        frameLayout.setOnTouchListener(new OnSwipeTouchListener(ExpenseActivity.this) {
+            public void onSwipeRight() {
+                if(bottomNavigationView.getSelectedItemId() == R.id.nav_expense)
+                {
+                    replaceFragment(new DashboardFragment());
+                    bottomNavigationView.setSelectedItemId(R.id.nav_dashboard);
+                }
+            }
+            public void onSwipeLeft() {
 
-
+                if(bottomNavigationView.getSelectedItemId() == R.id.nav_dashboard)
+                {
+                    replaceFragment(new ExpenseFragment());
+                    bottomNavigationView.setSelectedItemId(R.id.nav_expense);
+                }
+            }
+        });
     }
 
     private void setScreen() {
@@ -90,6 +114,7 @@ public class ExpenseActivity extends AppCompatActivity {
     private void init() {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         titileTV = findViewById(R.id.titleTV);
+        frameLayout = findViewById(R.id.frame_layout);
         titileTV.setText("DashBoard");
 
     }

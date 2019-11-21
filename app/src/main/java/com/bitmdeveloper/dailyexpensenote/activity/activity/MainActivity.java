@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner expense_typeSP;
     private Button expense_docBTN,expense_dateBTN,expense_timeBTN,add_expenseBTN;
     private TextView settileTV;
-    private ImageView expense_imageIV,cancelimageIV;
+    private ImageView expense_imageIV,cancelimageIV,backIV;
     private EditText expense_amountET;
     private DatabaseHelper helper;
     private ArrayAdapter<String> arrayAdapter;
@@ -83,7 +83,12 @@ public class MainActivity extends AppCompatActivity {
                 cancelimageIV.setVisibility(View.INVISIBLE);
             }
         });
-
+        backIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -159,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
                                 intent.putExtra("setScreen","1");
                                 startActivity(intent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
@@ -173,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
                                 intent.putExtra("setScreen","1");
                                 startActivity(intent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not update.", Toast.LENGTH_SHORT).show();
@@ -193,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
                                 intent.putExtra("setScreen","1");
                                 startActivity(intent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not insert.", Toast.LENGTH_SHORT).show();
@@ -208,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this,ExpenseActivity.class);
                                 intent.putExtra("setScreen","1");
                                 startActivity(intent);
+                                finish();
                             }
                             else {
                                 Toast.makeText(MainActivity.this, "Data did not inserted.", Toast.LENGTH_SHORT).show();
@@ -389,6 +398,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
+        backIV = findViewById(R.id.backIV);
         cancelimageIV = findViewById(R.id.cancelimageIV);
         expense_amountET = findViewById(R.id.expense_amountET);
         expense_dateBTN = findViewById(R.id.expense_dateET);
