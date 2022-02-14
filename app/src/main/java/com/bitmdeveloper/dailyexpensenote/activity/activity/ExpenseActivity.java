@@ -53,6 +53,7 @@ public class ExpenseActivity extends AppCompatActivity {
     }
 
     private void swipeAction() {
+
         frameLayout.setOnTouchListener(new OnSwipeTouchListener(ExpenseActivity.this) {
             public void onSwipeRight() {
                 if(bottomNavigationView.getSelectedItemId() == R.id.nav_expense)

@@ -53,7 +53,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ExpenseAdapter.ViewHolder holder,final int position) {
+    public void onBindViewHolder(@NonNull final ExpenseAdapter.ViewHolder holder,int position) {
+
         final Expense expense = expenses.get(position);
         holder.expense_typeTV.setText(expense.getExpense_type());
         holder.expense_dateTV.setText(expense.getExpense_date());
@@ -68,6 +69,8 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
                 expenseDate = view1.findViewById(R.id.expense_DateTV);
                 expenseTime = view1.findViewById(R.id.expense_TimeTV);
                 showDocumentBtn = view1.findViewById(R.id.showDocumentBtnId);
+
+
                 helper = new DatabaseHelper(context);
                 expenseType.setText(expense.getExpense_type());
                 expenseDate.setText(expense.getExpense_date());

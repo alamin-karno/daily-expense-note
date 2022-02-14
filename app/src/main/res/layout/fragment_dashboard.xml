@@ -32,22 +32,26 @@
             android:id="@+id/fromdateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="From date"
+            android:text="@string/from_date"
             android:textAlignment="center"
             android:layout_marginLeft="10dp"
             android:textColor="#1976D2"
-            android:drawableRight="@drawable/date"
-            android:drawablePadding="5dp"/>
+            android:drawablePadding="5dp"
+            android:gravity="center_horizontal"
+            app:drawableRightCompat="@drawable/date"
+            android:layout_marginStart="10dp" />
         <TextView
             android:id="@+id/todateTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To date"
+            android:text="@string/to_date"
             android:textAlignment="center"
             android:textColor="#1976D2"
             android:layout_marginLeft="10dp"
             android:drawablePadding="5dp"
-            android:drawableRight="@drawable/date"/>
+            android:gravity="center_horizontal"
+            android:layout_marginStart="10dp"
+            app:drawableRightCompat="@drawable/date" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -65,7 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Expense"
+            android:text="@string/total_expense"
             android:textColor="#FFF"
             android:textStyle="bold"
             android:textSize="25sp"/>
@@ -79,11 +83,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BDT"
+                android:text="@string/bdt"
                 android:textColor="#FFF"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
-                android:textSize="25sp"/>
+                android:textSize="25sp"
+                android:layout_marginEnd="10dp" />
             <TextView
                 android:id="@+id/totalExpenseTV"
                 android:layout_width="wrap_content"

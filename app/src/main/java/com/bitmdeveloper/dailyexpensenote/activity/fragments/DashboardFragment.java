@@ -1,6 +1,8 @@
 package com.bitmdeveloper.dailyexpensenote.activity.fragments;
 
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -73,19 +75,31 @@ public class DashboardFragment extends Fragment {
                 {
                     Cursor cursor = helper.getSpecificData("SELECT SUM (expense_amount) AS total FROM expense");
                     if (cursor.moveToFirst()) {
+
+                        int total = cursor.getInt(cursor.getColumnIndexOrThrow("total"));
+
+                        //Make Text Animation
+                        ValueAnimator animator = new ValueAnimator();
+                        animator.setObjectValues(0,total);
+                        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animation) {
+                                totalExpenseTV.setText(String.valueOf(animation.getAnimatedValue()));
+                            }
+                        });
+                        animator.setDuration(10000);
+                        animator.start();
+
+                    }
+                }
+               /* else if(position == 1){
+                    Cursor cursor = helper.getSpecificData("SELECT SUM (expense_amount) AS total FROM expense WHERE expense_type = 'Breakfast'");
+                    if (cursor.moveToFirst()) {
                         int total = cursor.getInt(cursor.getColumnIndex("total"));
                         totalExpenseTV.setText(String.valueOf(total));
                     }
-                }
+               }*/
 
-//                else if(position == 1){
-//                    Cursor cursor = helper.getSpecificData("SELECT SUM (expense_amount) AS total FROM expense WHERE expense_type = 'Breakfast'");
-//                    if (cursor.moveToFirst()) {
-//                        int total = cursor.getInt(cursor.getColumnIndex("total"));
-//                        totalExpenseTV.setText(String.valueOf(total));
-//                    }
-//                }
-//
 
             }
 

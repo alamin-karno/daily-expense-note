@@ -10,21 +10,22 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static String DATABASE_NAME = "Expense.db";
-    private static String TABLE_NAME = "expense";
+    private static final String DATABASE_NAME = "Expense.db";
+    private static final String TABLE_NAME = "expense";
     public static String COL_ID = "Id";
     public static String COL_TYPE = "type";
     public static String COL_AMOUNT = "expense_amount";
     public static String COL_DATE = "date";
     public static String COL_TIME = "time";
     public static String COL_DOC = "doc";
-    private static int VERSION = 1;
+    private static final int VERSION = 1;
 
-    private String createTable = "create table "+TABLE_NAME+" ("+COL_ID+" Integer primary key autoincrement, "+COL_TYPE+" TEXT, "+COL_AMOUNT+" TEXT, "
+    private final String createTable = "create table "+TABLE_NAME+" ("+COL_ID+" Integer primary key autoincrement, "+COL_TYPE+" TEXT, "+COL_AMOUNT+" TEXT, "
             +COL_DATE+" TEXT, "+COL_TIME+" TEXT, "+COL_DOC+" TEXT)";
     private static final String DROP_TABLE = " DROP TABLE IF EXISTS "+TABLE_NAME;
 
-    private Context context;
+    private final Context context;
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, VERSION);
         this.context = context;
@@ -62,8 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_TIME,time);
         values.put(COL_DOC,doc);
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        long id = sqLiteDatabase.insert(TABLE_NAME,null,values);
-        return id;
+        return sqLiteDatabase.insert(TABLE_NAME,null,values);
     }
     public long updatedata(String id,String type,String amount,String date,String time,String doc){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -75,30 +75,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_TIME,time);
         values.put(COL_DOC,doc);
 
-        long rid = sqLiteDatabase.update(TABLE_NAME,values,"id = ?",new String[]{id});
-        return rid;
+        return sqLiteDatabase.update(TABLE_NAME,values,"id = ?",new String[]{id});
     }
     public Cursor showData(){
         String getTable = "Select * From "+TABLE_NAME;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery(getTable,null);
-        return cursor;
+        return sqLiteDatabase.rawQuery(getTable,null);
     }
 
     public int deleteDataFromDatabase(int rowId) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        int deleteId = sqLiteDatabase.delete(TABLE_NAME, COL_ID + "=" + rowId, null);
-        return deleteId;
+        return sqLiteDatabase.delete(TABLE_NAME, COL_ID + "=" + rowId, null);
     }
 
 
     public Integer deleteData(Integer id){
         SQLiteDatabase db = this.getWritableDatabase();
-        int deleteID = db.delete(TABLE_NAME,COL_ID + "=" +id,null);
-        return deleteID;
+        return db.delete(TABLE_NAME,COL_ID + "=" +id,null);
     }
+
+    public Cursor getItemTypeData(String item_type) {
+
+        String QUERY = "select * From "+TABLE_NAME+" where "+COL_TYPE+" = '"+item_type+"'";
+
+        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+
+        return sqLiteDatabase.rawQuery(QUERY,null);
+    }
+
     public Cursor getSpecificData(String sql) {
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         return sqLiteDatabase.rawQuery(sql,null);
     }
 }

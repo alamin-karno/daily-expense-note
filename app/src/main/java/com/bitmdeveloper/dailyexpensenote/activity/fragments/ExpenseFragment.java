@@ -25,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bitmdeveloper.dailyexpensenote.R;
 import com.bitmdeveloper.dailyexpensenote.activity.activity.ExpenseActivity;
 import com.bitmdeveloper.dailyexpensenote.activity.activity.MainActivity;
@@ -47,15 +48,18 @@ import java.util.List;
 public class ExpenseFragment extends Fragment {
     List<Expense> expenseList;
     private Spinner expensetype;
-    private String[] expensetypeList={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
+    private String[] expenseTypeList={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
     private ArrayAdapter<String> arrayAdapter;
     private RecyclerView recyclerView;
     private ExpenseAdapter adapter;
     public static DatabaseHelper helper;
+    private LottieAnimationView lottieAnimationView;
 
     private TextView fromDateTV,toDateTV;
     private String fromdate;
     private FloatingActionButton favicon;
+
+
     public ExpenseFragment() {
         // Required empty public constructor
     }
@@ -77,33 +81,140 @@ public class ExpenseFragment extends Fragment {
 
         getToDate();
 
-        getdata();
+        //getdata();
 
-        notifyRecyclerView();
-
-       // Filtering();
+        Filtering();
 
         return view;
     }
 
 
     private void notifyRecyclerView() {
+
         adapter = new ExpenseAdapter(expenseList,getContext());
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
 
     private void Filtering() {
+
         expensetype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
-                    getdata();
-                    notifyRecyclerView();
+
+                    Cursor cursor = helper.showData();
+                    if(cursor.getCount() >0){
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
                 }
                 else if(position == 1){
-                    Cursor cursor = helper.getSpecificData("SELECT * FROM expense WHERE expense_type = 'Breakfast'");
-                   // setData(cursor);
+
+                    Cursor cursor = helper.getItemTypeData(parent.getSelectedItem().toString());
+
+                    if(cursor.getCount() > 0){
+
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
+                }
+                else if(position == 2){
+
+                    Cursor cursor = helper.getItemTypeData(parent.getSelectedItem().toString());
+
+                    if(cursor.getCount() > 0){
+
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
+                }
+                else if(position == 3){
+
+                    Cursor cursor = helper.getItemTypeData(parent.getSelectedItem().toString());
+
+                    if(cursor.getCount() > 0){
+
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
+                }
+                else if(position == 4){
+
+                    Cursor cursor = helper.getItemTypeData(parent.getSelectedItem().toString());
+
+                    if(cursor.getCount() > 0){
+
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
+                }
+                else if(position == 5){
+
+                    Cursor cursor = helper.getItemTypeData(parent.getSelectedItem().toString());
+
+                    if(cursor.getCount() > 0){
+
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
+                }
+                else if(position == 6){
+
+                    Cursor cursor = helper.getItemTypeData(parent.getSelectedItem().toString());
+
+                    if(cursor.getCount() > 0){
+
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
+                }
+                else if(position == 7){
+
+                    Cursor cursor = helper.getItemTypeData(parent.getSelectedItem().toString());
+
+                    if(cursor.getCount() > 0){
+
+                        setData(cursor);
+                    }
+                    else {
+                        loadAnimation(true);
+                        Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                        expenseList.clear();
+                    }
+                }
+                else {
+                    loadAnimation(true);
+                    Toast.makeText(getContext(), "No Data available.", Toast.LENGTH_SHORT).show();
+                    expenseList.clear();
                 }
             }
 
@@ -115,18 +226,35 @@ public class ExpenseFragment extends Fragment {
     }
 
     private void setData(Cursor cursor) {
+
         expenseList.clear();
+
         while (cursor.moveToNext()){
-            String expense_id = cursor.getString(cursor.getColumnIndex(helper.COL_ID));
-            String expense_type = cursor.getString(cursor.getColumnIndex(helper.COL_TYPE));
-            String expense_amount = cursor.getString(cursor.getColumnIndex(helper.COL_AMOUNT));
-            String expense_date = cursor.getString(cursor.getColumnIndex(helper.COL_DATE));
-            String expense_time = cursor.getString(cursor.getColumnIndex(helper.COL_TIME));
-            String expese_doc = cursor.getString(cursor.getColumnIndex(helper.COL_DOC));
+
+            String expense_id = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_ID));
+            String expense_type = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_TYPE));
+            String expense_amount = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_AMOUNT));
+            String expense_date = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_DATE));
+            String expense_time = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_TIME));
+            String expese_doc = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_DOC));
 
             expenseList.add(new Expense(expense_id,expense_type,expense_amount,expense_date,expense_time,expese_doc));
         }
+
+        loadAnimation(false);
+
         notifyRecyclerView();
+    }
+
+    private void loadAnimation(boolean b) {
+        if(b){
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+        else{
+            lottieAnimationView.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -161,6 +289,7 @@ public class ExpenseFragment extends Fragment {
     }
 
     private void getToDate() {
+
         toDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -238,10 +367,14 @@ public class ExpenseFragment extends Fragment {
 
     }
 
-    private void getdata() {
+    /*private void getdata() {
+
         expenseList.clear();
-        Cursor cursor = helper.showData();
+
+
+
         while (cursor.moveToNext()){
+
             String expense_id = cursor.getString(cursor.getColumnIndex(helper.COL_ID));
             String expense_type = cursor.getString(cursor.getColumnIndex(helper.COL_TYPE));
             String expense_amount = cursor.getString(cursor.getColumnIndex(helper.COL_AMOUNT));
@@ -253,16 +386,22 @@ public class ExpenseFragment extends Fragment {
 
         }
         notifyRecyclerView();
-    }
+    }*/
 
 
     private void init(View view) {
+
         favicon = view.findViewById(R.id.favicon);
         expenseList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.expenseRecycleView);
+        lottieAnimationView = view.findViewById(R.id.animationView);
         helper = new DatabaseHelper(getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.isSmoothScrollbarEnabled();
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 
 
@@ -275,7 +414,7 @@ public class ExpenseFragment extends Fragment {
 
     private void setSpinner(View view) {
         expensetype = view.findViewById(R.id.expense_typeSP);
-        arrayAdapter = new ArrayAdapter<>(getActivity(),R.layout.support_simple_spinner_dropdown_item,expensetypeList);
+        arrayAdapter = new ArrayAdapter<>(getActivity(),R.layout.support_simple_spinner_dropdown_item,expenseTypeList);
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         expensetype.setAdapter(arrayAdapter);
     }

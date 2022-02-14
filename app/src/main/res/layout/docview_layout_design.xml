@@ -22,7 +22,8 @@
                 android:layout_height="300dp"
                 android:id="@+id/imageViewLayout"
                 android:scaleType="fitXY"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:contentDescription="@string/document" />
 
         </LinearLayout>
 

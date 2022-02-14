@@ -3,4 +3,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="document">Document</string>
+    <string name="add_document_if_any">Add document (if any)</string>
+    <string name="add_expense">Add expense</string>
+    <string name="enter_expense_time_optional">Enter expense time (optional)</string>
+    <string name="enter_expense_date">Enter expense date</string>
+    <string name="enter_expense_amount">Enter expense amount</string>
+    <string name="back">back</string>
+    <string name="done">Done</string>
+    <string name="from_date">From date</string>
+    <string name="to_date">To date</string>
+    <string name="total_expense">Total Expense</string>
+    <string name="bdt">BDT</string>
 </resources>

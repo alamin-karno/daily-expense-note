@@ -245,9 +245,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void gettime() {
+
         expense_timeBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                 View view1 = getLayoutInflater().inflate(R.layout.custom_time_picker,null);
@@ -284,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
         expense_dateBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
