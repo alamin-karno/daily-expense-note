@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseHelper helper;
     private ArrayAdapter<String> arrayAdapter;
 
-    private String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
+    private final String[] categories={"Select expense type","Breakfast","Lunch","Dinner","Transport Cost","Medicine","Phone Bill","Others"};
     private String type,amount,date,time,doc;
     private String idIntent,updateimage;
     private Bitmap bitmappic = null;
@@ -121,8 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             byte [] encodeByte= Base64.decode(updateimage,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
+            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
         } catch(Exception e) {
             e.getMessage();
             return null;
@@ -240,8 +239,7 @@ public class MainActivity extends AppCompatActivity {
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
         bitmappic.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();
-        String stringImage=Base64.encodeToString(b, Base64.DEFAULT);
-        return stringImage;
+        return Base64.encodeToString(b, Base64.DEFAULT);
     }
 
     private void gettime() {
